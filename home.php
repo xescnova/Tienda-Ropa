@@ -1,4 +1,3 @@
-<!DOCTYPE HTML>
 <html>
 
 <head>
@@ -160,6 +159,11 @@
                     </div>
                 </div>
                 <div class="row row-pb-md">
+                    <?php
+                    require_once 'fetchMongo.php';
+                    fetchLimit(16);
+                    /*
+
                     <div class="col-md-3 col-lg-3 mb-4 text-center">
                         <div class="product-entry border">
                             <a href="#" class="prod-img">
@@ -339,8 +343,9 @@
                             </div>
                         </div>
                     </div>
+                    */
+                    ?>
                 </div>
-
             </div>
         </div>
         <!-- Imágenes de marcas -->
@@ -378,7 +383,9 @@
                     <div class="col-sm-12 text-center">
                         <p>
                             <span>
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Autores: Francesc Nova , Omar Kamand , Denny Barreiro</span>
+                                Copyright &copy;<script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | Autores: Francesc Nova , Omar Kamand , Denny Barreiro</span>
                             </span>
                         </p>
                     </div>
