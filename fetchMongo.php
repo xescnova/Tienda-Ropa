@@ -54,8 +54,7 @@ function fetchLimit($limit)
     }
 }
 
-function fetchCategoria($categoria)
-{
+function fetchCategoria($categoria) {
     require_once 'conexionMongo.php';
     $peticion = $db->find("{categoria: '.$categoria.'}");
 
@@ -86,24 +85,26 @@ function fetchCategoria($categoria)
     }
 }
 
-function fetchProducto($id_prod)
-{
+function fetchProducto($id_prod) {
     require_once 'conexionMongo.php';
     $peticion = $db->find("{categoria: '.$categoria.'}");
 
-    $filtro = array('sku' => $id_prod);
+    $filtro = array('sku' => $categoria);
     $peticion = $db->find($filtro);
-    echo '
-        <div class="col-md-3 col-lg-3 mb-4 text-center">
-            <div class="product-entry border">
-                <a href="#" class="prod-img">
-                    <img src="' . $producto["imagen"] . '" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                </a>
-                <div class="desc">
-                    <h2><a href="#">' . $producto["titulo"] .  '</a></h2>
-                    <span class="price">' . $producto["precio"] . '€</span>
+
+    foreach ($peticion as $producto) {
+        echo '
+            <div class="col-md-3 col-lg-3 mb-4 text-center">
+                <div class="product-entry border">
+                    <a href="#" class="prod-img">
+                        <img src="' . $producto["imagen"] . '" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                    </a>
+                    <div class="desc">
+                        <h2><a href="#">' . $producto["titulo"] .  '</a></h2>
+                        <span class="price">' . $producto["precio"] . '€</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    ';
+        ';
+    }
 }
