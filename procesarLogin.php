@@ -19,7 +19,13 @@
     $consulta=$conex->prepare("SELECT * FROM Usuario where name='".$us."' AND password='".$co."'");
     $consulta->execute();
     $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($datos);
+    echo "PRUEBA";
+    if($datos != null){
+        header('Location: home.php');
+    }
+    else{
+        echo "Error login";
+    }
     ?>
 </body>
 </html>
