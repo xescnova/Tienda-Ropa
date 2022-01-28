@@ -19,15 +19,6 @@
     include "conexionSQLServer.php";
     $consulta=$conex->prepare("SELECT * FROM Usuario where name='".$us."' AND password='".$co."'");
     $consulta->execute();
-<<<<<<< HEAD
-    $datos=$consulta->fetchAll(PDO::FETCH_ASSOC);
-    echo "PRUEBA";
-    if($datos != null){
-        header('Location: home.php');
-    }
-    else{
-        echo "Error login";
-=======
     $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datos != null){
         echo $datos[0]->id;
@@ -37,7 +28,6 @@
     }
     else{
         echo "Error Login";
->>>>>>> 8ef9c27a9a238eb95c32f6dfbeb2144cb25d27f8
     }
     ?>
 </body>
