@@ -52,13 +52,17 @@
     <div class="logo">Registrarse</div>
     <!-- Main Form -->
     <div class="login-form-1">
-        <form id="register-form" class="text-left">
+        <form id="register-form" class="text-left" action="procesarRegistrar.php" method="post">
             <div class="login-form-main-message"></div>
             <div class="main-login-form">
                 <div class="login-group">
                     <div class="form-group">
                         <label for="reg_username" class="sr-only">Email address</label>
                         <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_apellido" class="sr-only">Apellido</label>
+                        <input type="text" class="form-control" id="reg_apellido" name="reg_apellido" placeholder="Apellido">
                     </div>
                     <div class="form-group">
                         <label for="reg_password" class="sr-only">Password</label>
