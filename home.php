@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
 
 <head>
@@ -38,7 +39,10 @@
 </head>
 
 <body>
-
+<?php
+$us=$_SESSION['nombre'];
+$ide=$_SESSION['id'];
+?>
     <div class="colorlib-loader"></div>
 
     <div id="page">
@@ -48,6 +52,11 @@
                     <div class="row">
                         <div class="col-sm-7 col-md-9">
                             <div id="colorlib-logo"><a href="home.html">Tienda de ropa</a></div>
+                            <div id="nombreUs">Bienvenido 
+                                <?php
+                                $us=$_SESSION['nombre'];
+                                echo $us;
+                            ?></div>
                         </div>
                         <div class="col-sm-5 col-md-3">
                             <form action="#" class="search-wrap">

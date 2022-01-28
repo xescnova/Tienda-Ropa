@@ -21,13 +21,14 @@
     $consulta->execute();
     $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datos != null){
-        echo $datos[0]->id;
-        $_SESSION['id']=$datos[0]->id;
-        $action= "home.php";
-        header('Location: home.php');
+        echo "Usuario ya existe";
     }
     else{
-        echo "Error Login";
+        echo $datos[0]->id;
+        $_SESSION['id']=$datos[0]->id;
+        
+        $action= "index.php";
+        header('Location: index.php');
     }
     ?>
 </body>
