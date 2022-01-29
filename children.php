@@ -103,7 +103,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <p class="bread"><span><a href="home.php">Inicio</a></span> / <span>Hombres</span></p>
+                        <p class="bread"><span><a href="home.php">Inicio</a></span> / <span>Niños</span></p>
                     </div>
                 </div>
             </div>
@@ -113,10 +113,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="breadcrumbs-img" style="background-image: url(images/men.jpg);">
-                            <h2>Hombres</h2>
+                        <div class="breadcrumbs-img" style="background-image: url(images/cover-img-1.jpg);">
+                            <h2>Niños</h2>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -132,7 +131,7 @@
                 <div class="row row-pb-md">
                     <?php
                     require_once 'fetchMongo.php';
-                    fetchCategoria('Hombre');
+                    fetchCategoria('Niño');
                     ?>
                 </div>
             </div>

@@ -51,7 +51,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-7 col-md-9">
-                            <div id="colorlib-logo"><a href="home.html">Tienda Sancionados</a></div>
+                            <div id="colorlib-logo"><a href="home.php">Tienda Sancionados</a></div>
                             <div id="nombreUs">Bienvenido
                                 <?php
                                 $us = $_SESSION['nombre'];
