@@ -10,12 +10,10 @@
 <body>
     <?php
 
-    $us=$_POST['lg_username'];
-    $co=$_POST['lg_password'];
+    $us=$_POST['reg_username'];
+    $co=$_POST['reg_password'];
     $_SESSION['nombre']=$us;
-  //  $_SESSION['nombre']=$us;
-   // $_SESSION['usu']=$_POST['Usuari'];
-    //$_SESSION['cont']=$_POST['Contrasenya'];
+
     include "conexionSQLServer.php";
     $consulta=$conex->prepare("SELECT * FROM Usuario where name='".$us."' AND password='".$co."'");
     $consulta->execute();
@@ -24,12 +22,26 @@
         echo "Usuario ya existe";
     }
     else{
-        echo $datos[0]->id;
-        $_SESSION['id']=$datos[0]->id;
-        
+       // echo $datos[0]->id;
+        //$_SESSION['id']=$datos[0]->id;
+        $usuario= $_POST['reg_username'];
+        $apellido= $_POST['reg_apellido'];
+        $pass=$_POST['reg_password'];
+        $email=$_POST['reg_email'];
+        try{
+        $conex->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql= "INSERT INTO Usuario (name,apellido,email,password,credito) VALUES ('".$usuario."','".$apellido."','".$email."','".$pass."','3000')";
+        echo $sql;
+        $conex->exec($sql);
         $action= "index.php";
         header('Location: index.php');
+        
+        }
+        catch (PDOException $e){
+        echo $sql . "<br>" . $e->getMessage();
+        }
     }
+    $conex=null;
     ?>
 </body>
 </html>
