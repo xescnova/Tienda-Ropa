@@ -67,7 +67,6 @@ function fetchLimit($limit)
 
 function fetchCategoria($categoria) {
     require_once 'conexionMongo.php';
-    $peticion = $db->find("{categoria: '.$categoria.'}");
 
     $filtro = array('categoria' => $categoria);
     $peticion = $db->find($filtro);
@@ -87,9 +86,6 @@ function fetchCategoria($categoria) {
                 </div>
             </div>
         ';
-        if (++$i == $limit) {
-            break;
-        }
         if ($i == 4) {
             echo '<div class="w-100"></div>';
         }
@@ -98,6 +94,10 @@ function fetchCategoria($categoria) {
 
 function fetchProducto($id_prod,$id) {
     require_once 'conexionMongo.php';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 477540ebf825b4d3a96a557e1eef6c2ee2c42f84
     $filtro = array('sku' => $id_prod);
     $peticion = $db->find($filtro);
     foreach ($peticion as $producto) {
