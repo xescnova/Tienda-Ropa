@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE HTML>
 <html>
 
@@ -48,8 +49,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-7 col-md-9">
-                            <div id="colorlib-logo"><a href="home.html">Footwear</a></div>
+                            <div id="colorlib-logo"><a href="home.php">Tienda Sancionados</a></div>
                         </div>
+                        <!-- Search -->
                         <div class="col-sm-5 col-md-3">
                             <form action="#" class="search-wrap">
                                 <div class="form-group">
@@ -62,18 +64,10 @@
                     <div class="row">
                         <div class="col-sm-12 text-left menu-1">
                             <ul>
-                                <li><a href="home.html">Home</a></li>
-                                <li class="has-dropdown active">
-                                    <a href="men.html">Men</a>
-                                    <ul class="dropdown">
-                                        <li><a href="product-detail.html">Product Detail</a></li>
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="order-complete.html">Order Complete</a></li>
-                                        <li><a href="add-to-wishlist.html">Wishlist</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="women.html">Women</a></li>
+                                <li><a href="home.php">Inicio</a></li>
+                                <li><a href="men.php">Hombres</a></li>
+                                <li><a href="women.php">Mujer</a></li>
+                                <li><a href="children.php">Niños</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                                 <li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
@@ -90,12 +84,12 @@
                                 <div class="owl-carousel2">
                                     <div class="item">
                                         <div class="col">
-                                            <h3><a href="#">25% off (Almost) Everything! Use Code: Summer Sale</a></h3>
+                                            <h3><a href="#">Las mejores ofertas</a></h3>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="col">
-                                            <h3><a href="#">Our biggest sale yet 50% off all summer shoes</a></h3>
+                                            <h3><a href="#">Todo al 50%</a></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -105,6 +99,7 @@
                 </div>
             </div>
         </nav>
+
 
         <div class="breadcrumbs">
             <div class="container">
@@ -141,21 +136,64 @@
                     <div class="col-md-12">
                         <div class="product-name d-flex">
                             <div class="one-forth text-left px-4">
-                                <span>Product Details</span>
+                                <span>Detalles del pedido</span>
                             </div>
                             <div class="one-eight text-center">
-                                <span>Price</span>
+                                <span>Precio</span>
                             </div>
                             <div class="one-eight text-center">
-                                <span>Quantity</span>
+                                <span>Cantidad</span>
                             </div>
                             <div class="one-eight text-center">
                                 <span>Total</span>
                             </div>
                             <div class="one-eight text-center px-4">
-                                <span>Remove</span>
+                                <span>Eliminar</span>
                             </div>
                         </div>
+                        <?php
+                         include "conexionSQLServer.php";
+                         $consulta=$conex->prepare("SELECT * FROM carrito JOIN cantidad 
+                         on idc_carrito=id_carrito JOIN producto 
+                         on id_producto=idc_producto 
+                         where id_usr='6'");
+                         $consulta->execute();
+                         $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
+                         $nom=$datos[0]->nombre;
+                         $precio=$datos[0]->precio;
+                         $cantidad=$datos[0]->cantidad;
+                         $total=$cantidad *$precio;
+                         echo '<div class="product-cart d-flex">
+                         <div class="one-forth">
+                             <div class="product-img" style="background-image: url(images/item-6.jpg);">
+                             </div>
+                             <div class="display-tc">
+                                 <h3>'.$nom.'</h3>
+                             </div>
+                         </div>
+                         <div class="one-eight text-center">
+                             <div class="display-tc">
+                                 <span class="price">'.$precio.'</span>
+                             </div>
+                         </div>
+                         <div class="one-eight text-center">
+                             <div class="display-tc">
+                                 <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
+                             </div>
+                         </div>
+                         <div class="one-eight text-center">
+                             <div class="display-tc">
+                                 <span class="price">'.$total.'</span>
+                             </div>
+                         </div>
+                         <div class="one-eight text-center">
+                             <div class="display-tc">
+                                 <a href="#" class="closed"></a>
+                             </div>
+                         </div>
+                     </div>';
+                     
+                        ?>
                         <div class="product-cart d-flex">
                             <div class="one-forth">
                                 <div class="product-img" style="background-image: url(images/item-6.jpg);">
@@ -252,22 +290,12 @@
                         <div class="total-wrap">
                             <div class="row">
                                 <div class="col-sm-8">
-                                    <form action="#">
-                                        <div class="row form-group">
-                                            <div class="col-sm-9">
-                                                <input type="text" name="quantity" class="form-control input-number" placeholder="Your Coupon Number...">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <input type="submit" value="Apply Coupon" class="btn btn-primary">
-                                            </div>
-                                        </div>
-                                    </form>
+
                                 </div>
                                 <div class="col-sm-4 text-center">
                                     <div class="total">
                                         <div class="sub">
                                             <p><span>Subtotal:</span> <span>$200.00</span></p>
-                                            <p><span>Delivery:</span> <span>$0.00</span></p>
                                             <p><span>Discount:</span> <span>$45.00</span></p>
                                         </div>
                                         <div class="grand-total">
@@ -280,130 +308,47 @@
                     </div>
                 </div>
 
+
+            </div>
+        </div>
+        <div class="colorlib-partner">
+            <div class="container">
                 <div class="row">
                     <div class="col-sm-8 offset-sm-2 text-center colorlib-heading colorlib-heading-sm">
-                        <h2>Related Products</h2>
+                        <h2>Trusted Partners</h2>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 col-lg-3 mb-4 text-center">
-                        <div class="product-entry border">
-                            <a href="#" class="prod-img">
-                                <img src="images/item-1.jpg" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                            </a>
-                            <div class="desc">
-                                <h2><a href="#">Women's Boots Shoes Maca</a></h2>
-                                <span class="price">$139.00</span>
-                            </div>
-                        </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-1.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
                     </div>
-                    <div class="col-md-3 col-lg-3 mb-4 text-center">
-                        <div class="product-entry border">
-                            <a href="#" class="prod-img">
-                                <img src="images/item-2.jpg" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                            </a>
-                            <div class="desc">
-                                <h2><a href="#">Women's Minam Meaghan</a></h2>
-                                <span class="price">$139.00</span>
-                            </div>
-                        </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-2.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
                     </div>
-                    <div class="col-md-3 col-lg-3 mb-4 text-center">
-                        <div class="product-entry border">
-                            <a href="#" class="prod-img">
-                                <img src="images/item-3.jpg" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                            </a>
-                            <div class="desc">
-                                <h2><a href="#">Men's Taja Commissioner</a></h2>
-                                <span class="price">$139.00</span>
-                            </div>
-                        </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-3.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
                     </div>
-                    <div class="col-md-3 col-lg-3 mb-4 text-center">
-                        <div class="product-entry border">
-                            <a href="#" class="prod-img">
-                                <img src="images/item-4.jpg" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                            </a>
-                            <div class="desc">
-                                <h2><a href="#">Russ Men's Sneakers</a></h2>
-                                <span class="price">$139.00</span>
-                            </div>
-                        </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-4.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                    </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-5.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
                     </div>
                 </div>
             </div>
         </div>
 
         <footer id="colorlib-footer" role="contentinfo">
-            <div class="container">
-                <div class="row row-pb-md">
-                    <div class="col footer-col colorlib-widget">
-                        <h4>About Footwear</h4>
-                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-                        <p>
-                            <ul class="colorlib-social-icons">
-                                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="col footer-col colorlib-widget">
-                        <h4>Customer Care</h4>
-                        <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Returns/Exchange</a></li>
-                                <li><a href="#">Gift Voucher</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Special</a></li>
-                                <li><a href="#">Customer Services</a></li>
-                                <li><a href="#">Site maps</a></li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="col footer-col colorlib-widget">
-                        <h4>Information</h4>
-                        <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">Order Tracking</a></li>
-                            </ul>
-                        </p>
-                    </div>
 
-                    <div class="col footer-col">
-                        <h4>News</h4>
-                        <ul class="colorlib-footer-links">
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="#">Exhibitions</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col footer-col">
-                        <h4>Contact Information</h4>
-                        <ul class="colorlib-footer-links">
-                            <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-                            <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                            <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-                            <li><a href="#">yoursite.com</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="copy">
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <p>
-                            <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-                            <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+                            <span>
+                                Copyright &copy;<script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | Autores: Francesc Nova , Omar Kamand , Denny Barreiro</span>
+                            </span>
                         </p>
                     </div>
                 </div>
