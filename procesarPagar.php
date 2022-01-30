@@ -24,8 +24,11 @@ foreach ($datos2 as $producto) {
 $consulta4=$conex->prepare("SELECT credito FROM usuario where id='$ide'");
 $consulta4->execute();
 $datos4=$consulta4->fetchAll(PDO::FETCH_OBJ);
-if($datos4[0]->credito < '$pTot'){
-    echo '<script>alert("Error , no hay saldo suficiente");</script>';       
+if($datos4[0]->credito < $pTot){
+    echo '<script>alert("Error , no hay saldo suficiente");</script>'; 
+    $action= "cart.php";
+    header('Location: cart.php');  
+        
 }
 else{
 //Restamos saldo de la compra al usuario

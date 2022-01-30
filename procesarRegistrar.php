@@ -15,7 +15,7 @@
     $_SESSION['nombre']=$us;
 
     include "conexionSQLServer.php";
-    $consulta=$conex->prepare("SELECT * FROM Usuario where name='".$us."' AND password='".$co."'");
+    $consulta=$conex->prepare("SELECT * FROM Usuario where name='".$us."' ");
     $consulta->execute();
     $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datos != null){
