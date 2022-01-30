@@ -1,24 +1,16 @@
-<?php 
-session_start();
-require_once 'fetchMongo.php';
-$id = $_SESSION['id']; 
-try {
-	@$elemento= $_GET['item'];
-} catch (\Throwable $e) { }
-
-?>
 <!DOCTYPE HTML>
+<?php session_start();
+require_once 'fetchMongo.php'; ?>
 <html>
-	<head>
-	<title>Footwear - Free Bootstrap 4 Template by Colorlib</title>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<head>
+	<title>Tienda Sancionados</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
-	
-	<!-- JS con funciones -->
-	<script src="funcphpenjs.js"></script>
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -37,7 +29,7 @@ try {
 	<!-- Owl Carousel -->
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	
+
 	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 	<!-- Flaticons  -->
@@ -46,8 +38,14 @@ try {
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
-	</head>
-	<body>
+</head>
+
+<body>
+	<?php
+	$us = $_SESSION['nombre'];
+	$ide = $_SESSION['id'];
+	?>
+
 	<div class="colorlib-loader"></div>
 
 	<div id="page">
@@ -56,33 +54,37 @@ try {
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-7 col-md-9">
-							<div id="colorlib-logo"><a href="home.php">Footwear</a></div>
+							<div id="colorlib-logo"><a href="home.php">Tienda Sancionados</a></div>
+							<div id="nombreUs">Bienvenido
+								<?php
+								$us = $_SESSION['nombre'];
+								echo $us;
+								?></div>
 						</div>
 						<div class="col-sm-5 col-md-3">
-			            <form action="#" class="search-wrap">
-			               <div class="form-group">
-			                  <input type="search" class="form-control search" placeholder="Search">
-			                  <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
-			               </div>
-			            </form>
-			         </div>
-		         </div>
+							<form action="#" class="search-wrap">
+								<div class="form-group">
+									<input type="search" class="form-control search" placeholder="Search">
+									<button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-sm-12 text-left menu-1">
 							<ul>
-								<li><a href="home.php">Home</a></li>
-								<li class="has-dropdown active">
-									<a href="men.php">Men</a>
-									<ul class="dropdown">
-										<li><a href="product-detail.php?item=<?php echo $elemento; ?>">Product Detail</a></li>
-										<li><a href="cart.php">Shopping Cart</a></li>
-										<li><a href="checkout.php">Checkout</a></li>
-									</ul>
-								</li>
-								<li><a href="women.php">Women</a></li>
+								<li><a href="home.php">Inicio</a></li>
+								<li><a href="men.php">Hombres</a></li>
+								<li><a href="women.php">Mujer</a></li>
+								<li><a href="children.php">Niños</a></li>
 								<li><a href="contact.php">Contact</a></li>
-								<?php if($_SESSION['id'])
-                                        numCart($_SESSION['id']); ?>
+								<?php
+								if ($_SESSION['id'] == 1) {
+									echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
+								}
+								?>
+								<?php if ($_SESSION['id'])
+									numCart($_SESSION['id']); ?>
 							</ul>
 						</div>
 					</div>
@@ -96,12 +98,12 @@ try {
 								<div class="owl-carousel2">
 									<div class="item">
 										<div class="col">
-											<h3><a href="#">25% off (Almost) Everything! Use Code: Summer Sale</a></h3>
+											<h3><a href="#">Las mejores ofertas</a></h3>
 										</div>
 									</div>
 									<div class="item">
 										<div class="col">
-											<h3><a href="#">Our biggest sale yet 50% off all summer shoes</a></h3>
+											<h3><a href="#">Todo al 50%</a></h3>
 										</div>
 									</div>
 								</div>
@@ -125,103 +127,44 @@ try {
 
 		<div class="colorlib-product">
 			<div class="container">
-			<?php 
-				
+				<?php
+
 				$addItem = false;
-				fetchProducto(intval($elemento),$id);
-    		?>
+				fetchProducto(intval($elemento), $id);
+				?>
 			</div>
 		</div>
 
 		<footer id="colorlib-footer" role="contentinfo">
-			<div class="container">
-				<div class="row row-pb-md">
-					<div class="col footer-col colorlib-widget">
-						<h4>About Footwear</h4>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						<p>
-							<ul class="colorlib-social-icons">
-								<li><a href="#"><i class="icon-twitter"></i></a></li>
-								<li><a href="#"><i class="icon-facebook"></i></a></li>
-								<li><a href="#"><i class="icon-linkedin"></i></a></li>
-								<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							</ul>
-						</p>
-					</div>
-					<div class="col footer-col colorlib-widget">
-						<h4>Customer Care</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">Contact</a></li>
-								<li><a href="#">Returns/Exchange</a></li>
-								<li><a href="#">Gift Voucher</a></li>
-								<li><a href="#">Wishlist</a></li>
-								<li><a href="#">Special</a></li>
-								<li><a href="#">Customer Services</a></li>
-								<li><a href="#">Site maps</a></li>
-							</ul>
-						</p>
-					</div>
-					<div class="col footer-col colorlib-widget">
-						<h4>Information</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">About us</a></li>
-								<li><a href="#">Delivery Information</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Order Tracking</a></li>
-							</ul>
-						</p>
-					</div>
 
-					<div class="col footer-col">
-						<h4>News</h4>
-						<ul class="colorlib-footer-links">
-							<li><a href="blog.php">Blog</a></li>
-							<li><a href="#">Press</a></li>
-							<li><a href="#">Exhibitions</a></li>
-						</ul>
-					</div>
-
-					<div class="col footer-col">
-						<h4>Contact Information</h4>
-						<ul class="colorlib-footer-links">
-							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-							<li><a href="#">yoursite.com</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="copy">
-				<div class="row">
-					<div class="col-sm-12 text-center">
-						<p>
-							<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
-							<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-						</p>
-					</div>
-				</div>
-			</div>
-		</footer>
+            <div class="copy">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>
+                            <span>
+                                Copyright &copy;<script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | Autores: Francesc Nova , Omar Kamand , Denny Barreiro</span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
 	</div>
 
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
 	</div>
-	
+
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
-   <!-- popper -->
-   <script src="js/popper.min.js"></script>
-   <!-- bootstrap 4.1 -->
-   <script src="js/bootstrap.min.js"></script>
-   <!-- jQuery easing -->
-   <script src="js/jquery.easing.1.3.js"></script>
+	<!-- popper -->
+	<script src="js/popper.min.js"></script>
+	<!-- bootstrap 4.1 -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- jQuery easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- Flexslider -->
@@ -239,43 +182,43 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/main.js"></script>
 
 	<script>
-		$(document).ready(function(){
+		$(document).ready(function() {
 
-		var quantitiy=0;
-		   $('.quantity-right-plus').click(function(e){
-		        
-		        // Stop acting like a button
-		        e.preventDefault();
-		        // Get the field name
-		        var quantity = parseInt($('#quantity').val());
-		        
-		        // If is not undefined
-		            
-		            $('#quantity').val(quantity + 1);
+			var quantitiy = 0;
+			$('.quantity-right-plus').click(function(e) {
 
-		          
-		            // Increment
-		        
-		    });
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
 
-		     $('.quantity-left-minus').click(function(e){
-		        // Stop acting like a button
-		        e.preventDefault();
-		        // Get the field name
-		        var quantity = parseInt($('#quantity').val());
-		        
-		        // If is not undefined
-		      
-		            // Increment
-		            if(quantity>0){
-		            $('#quantity').val(quantity - 1);
-		            }
-		    });
-		    
+				// If is not undefined
+
+				$('#quantity').val(quantity + 1);
+
+
+				// Increment
+
+			});
+
+			$('.quantity-left-minus').click(function(e) {
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				// Increment
+				if (quantity > 0) {
+					$('#quantity').val(quantity - 1);
+				}
+			});
+
 		});
 	</script>
 
 
-	</body>
-</html>
+</body>
 
+</html>
