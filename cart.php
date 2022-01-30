@@ -70,8 +70,7 @@ require_once 'fetchMongo.php'; ?>
                                 <li><a href="men.php">Hombres</a></li>
                                 <li><a href="women.php">Mujer</a></li>
                                 <li><a href="children.php">Niños</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.pjp">Contact</a></li>
                                 <?php if($_SESSION['id'])
                                         numCart($_SESSION['id']); ?>
                             </ul>

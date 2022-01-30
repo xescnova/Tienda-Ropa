@@ -75,7 +75,6 @@ require_once 'fetchMongo.php'; ?>
                                 <li><a href="men.php">Hombres</a></li>
                                 <li><a href="women.php">Mujer</a></li>
                                 <li><a href="children.php">Niños</a></li>
-                                <li><a href="about.html">About</a></li>
                                 <li><a href="contact.php">Contact</a></li>
                                 <?php 
                                     if($_SESSION['id'] == 1){
