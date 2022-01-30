@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<?php session_start(); ?>
 <html>
 
 <head>
@@ -39,6 +40,10 @@
 </head>
 
 <body>
+    <?php
+    $us = $_SESSION['nombre'];
+    $ide = $_SESSION['id'];
+    ?>
 
     <div class="colorlib-loader"></div>
 
@@ -49,8 +54,12 @@
                     <div class="row">
                         <div class="col-sm-7 col-md-9">
                             <div id="colorlib-logo"><a href="home.php">Tienda Sancionados</a></div>
+                            <div id="nombreUs">Bienvenido
+                                <?php
+                                $us = $_SESSION['nombre'];
+                                echo $us;
+                                ?></div>
                         </div>
-                        <!-- Search -->
                         <div class="col-sm-5 col-md-3">
                             <form action="#" class="search-wrap">
                                 <div class="form-group">
@@ -65,10 +74,14 @@
                             <ul>
                                 <li><a href="home.php">Inicio</a></li>
                                 <li><a href="men.php">Hombres</a></li>
-                                <li><a href="women.php">Mujeres</a></li>
+                                <li><a href="women.php">Mujer</a></li>
                                 <li><a href="children.php">Niños</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.php">Contact</a></li>
+                                <?php
+                                if ($_SESSION['id'] == 1) {
+                                    echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
+                                }
+                                ?>
                                 <li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                             </ul>
                         </div>
