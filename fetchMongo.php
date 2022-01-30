@@ -263,7 +263,6 @@ function numCart($ident)
     $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datos[0]->elems != null){
         $numCart=$datos[0]->elems;
-        
     }
     else
     {
