@@ -1,118 +1,127 @@
+<?php
+session_start();
+require_once 'fetchMongo.php';
+$id = $_SESSION['id'];
+try {
+	@$elemento = $_GET['item'];
+} catch (\Throwable $e) {
+}
+
+?>
 <!DOCTYPE HTML>
-<?php session_start();
-require_once 'fetchMongo.php'; ?>
 <html>
 
 <head>
-	<title>Tienda Sancionados</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tienda Sancionados</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
 
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Ion Icon Fonts-->
-	<link rel="stylesheet" href="css/ionicons.min.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css">
+    <!-- Ion Icon Fonts-->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
 
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="css/flexslider.css">
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="css/flexslider.css">
 
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
 
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
-	<?php
-	$us = $_SESSION['nombre'];
-	$ide = $_SESSION['id'];
-	?>
 
-	<div class="colorlib-loader"></div>
+    <?php
+    $us = $_SESSION['nombre'];
+    $ide = $_SESSION['id'];
+    ?>
 
-	<div id="page">
-		<nav class="colorlib-nav" role="navigation">
-			<div class="top-menu">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-7 col-md-9">
-							<div id="colorlib-logo"><a href="home.php">Tienda Sancionados</a></div>
-							<div id="nombreUs">Bienvenido
-								<?php
-								$us = $_SESSION['nombre'];
-								echo $us;
-								?></div>
-						</div>
-						<div class="col-sm-5 col-md-3">
-							<form action="#" class="search-wrap">
-								<div class="form-group">
-									<input type="search" class="form-control search" placeholder="Search">
-									<button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12 text-left menu-1">
-							<ul>
-								<li><a href="home.php">Inicio</a></li>
-								<li><a href="men.php">Hombres</a></li>
-								<li><a href="women.php">Mujer</a></li>
-								<li><a href="children.php">Niños</a></li>
-								<li><a href="contact.php">Contact</a></li>
-								<?php
-								if ($_SESSION['id'] == 1) {
-									echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
-								}
-								?>
-								<?php if ($_SESSION['id'])
-									numCart($_SESSION['id']); ?>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="sale">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-8 offset-sm-2 text-center">
-							<div class="row">
-								<div class="owl-carousel2">
-									<div class="item">
-										<div class="col">
-											<h3><a href="#">Las mejores ofertas</a></h3>
-										</div>
-									</div>
-									<div class="item">
-										<div class="col">
-											<h3><a href="#">Todo al 50%</a></h3>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</nav>
+    <div class="colorlib-loader"></div>
+
+    <div id="page">
+        <nav class="colorlib-nav" role="navigation">
+            <div class="top-menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-7 col-md-9">
+                            <div id="colorlib-logo"><a href="home.php">Tienda Sancionados</a></div>
+                            <div id="nombreUs">Bienvenido
+                                <?php
+                                $us = $_SESSION['nombre'];
+                                echo $us;
+                                ?></div>
+                        </div>
+                        <div class="col-sm-5 col-md-3">
+                            <form action="#" class="search-wrap">
+                                <div class="form-group">
+                                    <input type="search" class="form-control search" placeholder="Search">
+                                    <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-left menu-1">
+                            <ul>
+                                <li><a href="home.php">Inicio</a></li>
+                                <li><a href="men.php">Hombres</a></li>
+                                <li><a href="women.php">Mujer</a></li>
+                                <li><a href="children.php">Niños</a></li>
+                                <li><a href="contact.php">Contact</a></li>
+                                <?php
+                                if ($_SESSION['id'] == 1) {
+                                    echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
+                                }
+                                ?>
+                                <?php if($_SESSION['id'])
+                                        numCart($_SESSION['id']); ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sale">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 offset-sm-2 text-center">
+                            <div class="row">
+                                <div class="owl-carousel2">
+                                    <div class="item">
+                                        <div class="col">
+                                            <h3><a href="#">Las mejores ofertas</a></h3>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="col">
+                                            <h3><a href="#">Todo al 50%</a></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
 		<div class="breadcrumbs">
 			<div class="container">
