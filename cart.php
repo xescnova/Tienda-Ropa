@@ -245,7 +245,7 @@ require_once 'fetchMongo.php'; ?>
                                 include "conexionSQLServer.php";
                                 $consulta=$conex->prepare("SELECT nombre,cantidad,precio FROM CANTIDAD 
                                 JOIN PRODUCTO on idc_producto=id_producto
-                                JOIN CARRITO on id_carrito=idc_carrito 
+                                JOIN CARRITO on id_carrito=idc_carrito AND estado='CREADO' 
                                 where id_usr='$ide'");
                                 $consulta->execute();
                                // echo $consulta;
@@ -258,7 +258,7 @@ require_once 'fetchMongo.php'; ?>
                                 
                                 $consulta2=$conex->prepare("SELECT cantidad,precio FROM CANTIDAD 
                                 JOIN PRODUCTO on idc_producto=id_producto
-                                JOIN CARRITO on id_carrito=idc_carrito 
+                                JOIN CARRITO on id_carrito=idc_carrito AND estado='CREADO'
                                 where id_usr='$ide'");
                                 $consulta2->execute();
                                 $datos2=$consulta2->fetchAll(PDO::FETCH_OBJ);
@@ -339,43 +339,6 @@ require_once 'fetchMongo.php'; ?>
         <div class="gototop js-top">
             <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
         </div>
-
-
-
-        <script>
-        /*
-        function prodMas(x,precio){ 
-            var cantidad=document.getElementById("quantity"+x).value
-            cantidad = parseInt(document.getElementById("quantity"+x).value)+ 1;
-            console.log(cantidad);
-            //var precioTotal=document.getElementById("total"+x).value
-            //precioTotal=parseInt(document.getElementById("quantity"));
-            //console.log(precioTotal);
-            //var ruta="pre="+precioTotal;
-            var pT= cantidad * precio;
-            //console.log(pT);
-            var ruta="Test="+pT;
-            //console.log(ruta);
-            //alert(ruta);
-            $.ajax({
-                type: "POST",
-                url: "procesarCarrito.php",
-                data: "ruta",
-                success: function (response) {
-                    alert(response);
-                    $("#total1").html(response)
-                }
-            });
-        }
-        */
-        </script>
-        <script>
-        /*
-        function prodMenos(x){            
-            document.getElementById("quantity"+x).value= parseInt(document.getElementById("quantity"+x).value)- 1;
-        }
-        */
-        </script>
 
         <!-- jQuery -->
         <script src="js/jquery.min.js"></script>
