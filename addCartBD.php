@@ -12,5 +12,5 @@ if ($cartrq)
 		require_once 'fetchMongo.php';
 		addCart($id,$elemento,$siz,$quant);
     }
-    //header("Location: product-detail.php?item=$elemento");
+	header("Location: product-detail.php?item=$elemento");
 ?>
