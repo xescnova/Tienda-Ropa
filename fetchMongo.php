@@ -216,12 +216,11 @@ function addCart($ident,$iditem,$size,$quantity)
 
     // Crear el carrito si no existe
     $conex->exec(" 
-    If Not Exists(select * from carrito where id_usr=".$ident.")
+    If Not Exists(select * from carrito where id_usr=".$ident." and estado='CREADO')
         Begin
-            insert into carrito (create_date,expire_date,id_usr) values (GETDATE(),DATEADD(minute, +10, GETDATE()),".$ident.")
+            insert into carrito (create_date,expire_date,id_usr,estado) values (GETDATE(),DATEADD(minute, +10, GETDATE()),".$ident.",'CREADO')
         End
     ");
-
     // Buscamos el idCarrito que corresponde al usuario
     $consulta=$conex->prepare("select id_carrito from carrito where id_usr=$ident");
     $consulta->execute();
@@ -232,7 +231,6 @@ function addCart($ident,$iditem,$size,$quantity)
 
     // Buscamos la talla
     $consulta=$conex->prepare("select id_talla from talla where nombre_talla='$size'");
-    echo $size;
     $consulta->execute();
     $datosTalla=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datosTalla != null){
