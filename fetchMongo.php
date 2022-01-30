@@ -222,7 +222,7 @@ function addCart($ident,$iditem,$size,$quantity)
         End
     ");
     // Buscamos el idCarrito que corresponde al usuario
-    $consulta=$conex->prepare("select id_carrito from carrito where id_usr=$ident");
+    $consulta=$conex->prepare("select id_carrito from carrito where id_usr=$ident AND estado='CREADO'");
     $consulta->execute();
     $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datos != null){
@@ -237,6 +237,7 @@ function addCart($ident,$iditem,$size,$quantity)
         $idsize=$datosTalla[0]->id_talla;
     }
     echo "(".$idcart.",".$iditem.",".$quantity.",".$idsize.")";
+
     // Añadir producto al carrito
     $conex->exec("If Not Exists(select * from cantidad where idc_carrito=$idcart AND idc_producto=$iditem AND id_tal=$idsize)
     Begin
