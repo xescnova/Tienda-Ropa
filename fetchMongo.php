@@ -1,16 +1,5 @@
 <?php
 
-if (isset($_POST['action'])) {
-    switch ($_POST['action']) {
-        case 'insert':
-            addCart($ident);
-            break;
-        case 'select':
-            select();
-            break;
-    }
-}
-
 function fetchAll()
 {
     require_once 'conexionMongo.php';
@@ -146,8 +135,6 @@ function fetchProducto($id_prod,$id) {
                                 
                                 echo '<li><option value='.$Object["talla"].'>'.$Object["talla"].'</option></li>';
                             }
-                            //$size = $_POST['size'];
-                            echo 'You have chosen: ' . $selected;
                          echo   
                         '</select>
                 </div>
@@ -245,6 +232,7 @@ function addCart($ident,$iditem,$size,$quantity)
 
     // Buscamos la talla
     $consulta=$conex->prepare("select id_talla from talla where nombre_talla='$size'");
+    echo $size;
     $consulta->execute();
     $datosTalla=$consulta->fetchAll(PDO::FETCH_OBJ);
     if($datosTalla != null){
@@ -262,4 +250,27 @@ function addCart($ident,$iditem,$size,$quantity)
     END");
     
 }
+
+function numCart($ident)
+{
+    include "conexionSQLServer.php";
+    // Buscamos el numero total de elementos en el carrito.
+    $consulta=$conex->prepare("
+    SELECT SUM(cantidad) as elems FROM CANTIDAD 
+    JOIN PRODUCTO on idc_producto=id_producto
+    JOIN CARRITO on id_carrito=idc_carrito 
+    where id_usr=".$ident.";
+    ");
+    $consulta->execute();
+    $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
+    if($datos != null){
+        $numCart=$datos[0]->elems;
+    }
+    else
+    {
+        $numCart=0; 
+    }
+    echo '<li class="cart"><a href="cart.php"><i class="icon-shopping-cart"></i> Cart ['.$numCart.']</a></li>';
+}
+
 ?>
