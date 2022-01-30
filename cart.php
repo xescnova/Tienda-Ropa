@@ -245,7 +245,7 @@ require_once 'fetchMongo.php'; ?>
                                 include "conexionSQLServer.php";
                                 $consulta=$conex->prepare("SELECT nombre,cantidad,precio FROM CANTIDAD 
                                 JOIN PRODUCTO on idc_producto=id_producto
-                                JOIN CARRITO on id_carrito=idc_carrito 
+                                JOIN CARRITO on id_carrito=idc_carrito AND estado='CREADO' 
                                 where id_usr='$ide'");
                                 $consulta->execute();
                                // echo $consulta;
@@ -258,7 +258,7 @@ require_once 'fetchMongo.php'; ?>
                                 
                                 $consulta2=$conex->prepare("SELECT cantidad,precio FROM CANTIDAD 
                                 JOIN PRODUCTO on idc_producto=id_producto
-                                JOIN CARRITO on id_carrito=idc_carrito 
+                                JOIN CARRITO on id_carrito=idc_carrito AND estado='CREADO' 
                                 where id_usr='$ide'");
                                 $consulta2->execute();
                                 $datos2=$consulta2->fetchAll(PDO::FETCH_OBJ);
