@@ -74,8 +74,12 @@
                                 <li><a href="men.php">Hombres</a></li>
                                 <li><a href="women.php">Mujer</a></li>
                                 <li><a href="children.php">Niños</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.php">Contact</a></li>
+                                <?php 
+                                    if($_SESSION['id'] == 1){
+                                        echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
+                                    }
+                                ?>
                                 <li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                             </ul>
                         </div>
