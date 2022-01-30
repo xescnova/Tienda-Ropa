@@ -1,16 +1,5 @@
 <?php
 
-if (isset($_POST['action'])) {
-    switch ($_POST['action']) {
-        case 'insert':
-            addCart($ident);
-            break;
-        case 'select':
-            select();
-            break;
-    }
-}
-
 function fetchAll()
 {
     require_once 'conexionMongo.php';
