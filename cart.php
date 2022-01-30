@@ -56,7 +56,8 @@
                             <form action="#" class="search-wrap">
                                 <div class="form-group">
                                     <input type="search" class="form-control search" placeholder="Search">
-                                    <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+                                    <button class="btn btn-primary submit-search text-center" type="submit"><i
+                                            class="icon-search"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -151,7 +152,7 @@
                                 <span>Eliminar</span>
                             </div>
                         </div>
-                            
+
                         <?php
                          $ide = $_SESSION['id'];
                          include "conexionSQLServer.php";
@@ -213,9 +214,9 @@
                      </div>';
                               }           
                         ?>
-                       
-                       
-                      
+
+
+
                     </div>
                 </div>
 
@@ -229,97 +230,118 @@
                  $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
                  ?>
                 <div class="row row-pb-lg">
-                <div class="col-md-12">
-                    <div class="total-wrap">
-                        <div class="row">
-                            <div class="col-sm-8">
+                    <div class="col-md-12">
+                        <div class="total-wrap">
+                            <div class="row">
+                                <div class="col-sm-8">
 
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <div class="total">
-                                    <div class="sub">
-                                <?php
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <div class="total">
+                                        <div class="sub">
+                                            <?php
                                 $ide = $_SESSION['id'];
                                 include "conexionSQLServer.php";
-                                $consulta=$conex->prepare("SELECT * FROM carrito JOIN cantidad 
-                                on idc_carrito=id_carrito JOIN PRODUCTO 
-                                on idc_producto=idc_producto where id_usr='$ide'");
+                                $consulta=$conex->prepare("SELECT nombre,cantidad,precio FROM CANTIDAD 
+                                JOIN PRODUCTO on idc_producto=id_producto
+                                JOIN CARRITO on id_carrito=idc_carrito 
+                                where id_usr='$ide'");
                                 $consulta->execute();
+                               // echo $consulta;
                                 $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
                                
+                               foreach ($datos as $producto) {
+                                $total=$producto->precio * $producto->cantidad;
+                                echo '<p><span>'.$producto->nombre.'</span> <span>'.$total.'€</span></p>';
+                                }  
                                 
-                                echo '<p><span>Subtotal:</span> <span>$200.00</span></p>';
-                                                                  
-                                ?>
-                                </div>
+                                $consulta2=$conex->prepare("SELECT cantidad,precio FROM CANTIDAD 
+                                JOIN PRODUCTO on idc_producto=id_producto
+                                JOIN CARRITO on id_carrito=idc_carrito 
+                                where id_usr='$ide'");
+                                $consulta2->execute();
+                                $datos2=$consulta2->fetchAll(PDO::FETCH_OBJ);
+                                $totalCarrito=0;
+                                foreach ($datos2 as $producto){
+                                    $precioTotalProducto= $producto->cantidad * $producto->precio;
+                                    $totalCarrito=$totalCarrito + $precioTotalProducto;
+                                }
+                                echo '</div>                                
                                 <div class="grand-total">
-                                    <p><span><strong>Total:</strong></span> <span>$450.00</span></p>
-                                </div>
+                                    <p><span><strong>Total:</strong></span> <span>'.$totalCarrito.'€</span></p>
+                                </div>';
+                                ?>
+                                            <form action="checkout.php" method="post">
+                                                <input type="hidden" name="producto" value="">
+                                                <input type="submit" class="btn btn-danger" value="Pagar">
+                                            </form>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
+
+
                 </div>
             </div>
-                
-                
-                
-
-
-            </div>
-        </div>
-        <div class="colorlib-partner">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 offset-sm-2 text-center colorlib-heading colorlib-heading-sm">
-                        <h2>Trusted Partners</h2>
+            <div class="colorlib-partner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 offset-sm-2 text-center colorlib-heading colorlib-heading-sm">
+                            <h2>Trusted Partners</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col partner-col text-center">
-                        <img src="images/brand-1.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                    </div>
-                    <div class="col partner-col text-center">
-                        <img src="images/brand-2.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                    </div>
-                    <div class="col partner-col text-center">
-                        <img src="images/brand-3.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                    </div>
-                    <div class="col partner-col text-center">
-                        <img src="images/brand-4.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                    </div>
-                    <div class="col partner-col text-center">
-                        <img src="images/brand-5.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                    <div class="row">
+                        <div class="col partner-col text-center">
+                            <img src="images/brand-1.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                        </div>
+                        <div class="col partner-col text-center">
+                            <img src="images/brand-2.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                        </div>
+                        <div class="col partner-col text-center">
+                            <img src="images/brand-3.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                        </div>
+                        <div class="col partner-col text-center">
+                            <img src="images/brand-4.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                        </div>
+                        <div class="col partner-col text-center">
+                            <img src="images/brand-5.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <footer id="colorlib-footer" role="contentinfo">
+            <footer id="colorlib-footer" role="contentinfo">
 
-            <div class="copy">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <p>
-                            <span>
-                                Copyright &copy;<script>
+                <div class="copy">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <p>
+                                <span>
+                                    Copyright &copy;<script>
                                     document.write(new Date().getFullYear());
-                                </script> All rights reserved | Autores: Francesc Nova , Omar Kamand , Denny Barreiro</span>
-                            </span>
-                        </p>
+                                    </script> All rights reserved | Autores: Francesc Nova , Omar Kamand , Denny
+                                    Barreiro</span>
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
-    </div>
+            </footer>
+        </div>
 
-    <div class="gototop js-top">
-        <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
-    </div>
-
+        <div class="gototop js-top">
+            <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+        </div>
 
 
-    <script>
+
+        <script>
         /*
         function prodMas(x,precio){ 
             var cantidad=document.getElementById("quantity"+x).value
@@ -345,38 +367,38 @@
             });
         }
         */
-    </script>
-     <script>
-         /*
+        </script>
+        <script>
+        /*
         function prodMenos(x){            
             document.getElementById("quantity"+x).value= parseInt(document.getElementById("quantity"+x).value)- 1;
         }
         */
-    </script>
+        </script>
 
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <!-- popper -->
-    <script src="js/popper.min.js"></script>
-    <!-- bootstrap 4.1 -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.js"></script>
-    <!-- Waypoints -->
-    <script src="js/jquery.waypoints.min.js"></script>
-    <!-- Flexslider -->
-    <script src="js/jquery.flexslider-min.js"></script>
-    <!-- Owl carousel -->
-    <script src="js/owl.carousel.min.js"></script>
-    <!-- Magnific Popup -->
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/magnific-popup-options.js"></script>
-    <!-- Date Picker -->
-    <script src="js/bootstrap-datepicker.js"></script>
-    <!-- Stellar Parallax -->
-    <script src="js/jquery.stellar.min.js"></script>
-    <!-- Main -->
-    <script src="js/main.js"></script>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <!-- popper -->
+        <script src="js/popper.min.js"></script>
+        <!-- bootstrap 4.1 -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- jQuery easing -->
+        <script src="js/jquery.easing.1.3.js"></script>
+        <!-- Waypoints -->
+        <script src="js/jquery.waypoints.min.js"></script>
+        <!-- Flexslider -->
+        <script src="js/jquery.flexslider-min.js"></script>
+        <!-- Owl carousel -->
+        <script src="js/owl.carousel.min.js"></script>
+        <!-- Magnific Popup -->
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/magnific-popup-options.js"></script>
+        <!-- Date Picker -->
+        <script src="js/bootstrap-datepicker.js"></script>
+        <!-- Stellar Parallax -->
+        <script src="js/jquery.stellar.min.js"></script>
+        <!-- Main -->
+        <script src="js/main.js"></script>
 
 </body>
 
