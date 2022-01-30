@@ -1,5 +1,6 @@
 <?php 
 session_start();
+require_once 'fetchMongo.php';
 $id = $_SESSION['id']; 
 try {
 	@$elemento= $_GET['item'];
@@ -80,7 +81,8 @@ try {
 								</li>
 								<li><a href="women.php">Women</a></li>
 								<li><a href="contact.php">Contact</a></li>
-								<li class="cart"><a href="cart.php"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+								<?php if($_SESSION['id'])
+                                        numCart($_SESSION['id']); ?>
 							</ul>
 						</div>
 					</div>
@@ -124,7 +126,7 @@ try {
 		<div class="colorlib-product">
 			<div class="container">
 			<?php 
-				require_once 'fetchMongo.php';
+				
 				$addItem = false;
 				fetchProducto(intval($elemento),$id);
     		?>

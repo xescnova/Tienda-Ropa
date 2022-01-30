@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<?php session_start(); ?>
+<?php session_start();
+require_once 'fetchMongo.php'; ?>
 <html>
 
 <head>
@@ -84,36 +85,36 @@
 									echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
 								}
 								?>
-                                <li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sale">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 offset-sm-2 text-center">
-                            <div class="row">
-                                <div class="owl-carousel2">
-                                    <div class="item">
-                                        <div class="col">
-                                            <h3><a href="#">Las mejores ofertas</a></h3>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="col">
-                                            <h3><a href="#">Todo al 50%</a></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+								<?php if($_SESSION['id'])
+                                        numCart($_SESSION['id']); ?>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sale">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 offset-sm-2 text-center">
+							<div class="row">
+								<div class="owl-carousel2">
+									<div class="item">
+										<div class="col">
+											<h3><a href="#">Las mejores ofertas</a></h3>
+										</div>
+									</div>
+									<div class="item">
+										<div class="col">
+											<h3><a href="#">Todo al 50%</a></h3>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
 
         <div class="breadcrumbs">
             <div class="container">

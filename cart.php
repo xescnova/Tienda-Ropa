@@ -1,4 +1,5 @@
-<?php session_start(); ?>
+<?php session_start();
+require_once 'fetchMongo.php'; ?>
 <!DOCTYPE HTML>
 <html>
 
@@ -71,7 +72,8 @@
                                 <li><a href="children.php">Niños</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="contact.html">Contact</a></li>
-                                <li class="cart"><a href="cart.php"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                                <?php if($_SESSION['id'])
+                                        numCart($_SESSION['id']); ?>
                             </ul>
                         </div>
                     </div>

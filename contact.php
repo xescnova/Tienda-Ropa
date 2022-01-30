@@ -1,52 +1,53 @@
 <!DOCTYPE HTML>
-<?php session_start(); ?>
+<?php session_start();
+require_once 'fetchMongo.php'; ?>
 <html>
 
 <head>
-	<title>Tienda Sancionados</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tienda Sancionados</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
 
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Ion Icon Fonts-->
-	<link rel="stylesheet" href="css/ionicons.min.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css">
+    <!-- Ion Icon Fonts-->
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
 
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="css/flexslider.css">
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="css/flexslider.css">
 
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
 
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
 
-	<?php
-	$us = $_SESSION['nombre'];
-	$ide = $_SESSION['id'];
-	?>
+    <?php
+    $us = $_SESSION['nombre'];
+    $ide = $_SESSION['id'];
+    ?>
 
-	<div class="colorlib-loader"></div>
+    <div class="colorlib-loader"></div>
 
 	<div id="page">
 		<nav class="colorlib-nav" role="navigation">
@@ -83,7 +84,8 @@
 									echo '<li><a href="actualizarStock.php">Actualizar stock</a></li>';
 								}
 								?>
-								<li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+								<?php if($_SESSION['id'])
+                                        numCart($_SESSION['id']); ?>
 							</ul>
 						</div>
 					</div>
@@ -117,7 +119,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <p class="bread"><span><a href="index.html">Home</a></span> / <span>Contact</span></p>
+                        <p class="bread"><span><a href="home.php">Home</a></span> / <span>Contact</span></p>
                     </div>
                 </div>
             </div>
@@ -131,16 +133,9 @@
                         <h3>Contact Information</h3>
                         <div class="row contact-info-wrap">
                             <div class="col-md-3">
-                                <p><span><i class="icon-location"></i></span> 198 West 21th Street, <br> Suite 721 New York NY 10016</p>
-                            </div>
-                            <div class="col-md-3">
-                                <p><span><i class="icon-phone3"></i></span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
-                            </div>
-                            <div class="col-md-3">
-                                <p><span><i class="icon-paperplane"></i></span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
-                            </div>
-                            <div class="col-md-3">
-                                <p><span><i class="icon-globe"></i></span> <a href="#">yoursite.com</a></p>
+                                <p><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                                        </svg></span> <a href="https://github.com/xescnova/SGBD_Tienda_Ropa">Github Tienda de Ropa</a></p>
                             </div>
                         </div>
                     </div>
@@ -148,40 +143,40 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="contact-wrap">
-                            <h3>Get In Touch</h3>
+                            <h3>Contáctanos</h3>
                             <form action="#" class="contact-form">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="fname">First Name</label>
-                                            <input type="text" id="fname" class="form-control" placeholder="Your firstname">
+                                            <label for="fname">Nombre</label>
+                                            <input type="text" id="fname" class="form-control" placeholder="Nombre">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="lname">Last Name</label>
-                                            <input type="text" id="lname" class="form-control" placeholder="Your lastname">
+                                            <label for="lname">Apellidos</label>
+                                            <input type="text" id="lname" class="form-control" placeholder="Apellidos">
                                         </div>
                                     </div>
                                     <div class="w-100"></div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="text" id="email" class="form-control" placeholder="Your email address">
+                                            <input type="text" id="email" class="form-control" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="w-100"></div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="subject">Subject</label>
-                                            <input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+                                            <label for="subject">Asunto</label>
+                                            <input type="text" id="subject" class="form-control" placeholder="Asunto del mensaje">
                                         </div>
                                     </div>
                                     <div class="w-100"></div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label for="message">Message</label>
-                                            <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>
+                                            <label for="message">Mensaje</label>
+                                            <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Escribe tu mensaje"></textarea>
                                         </div>
                                     </div>
                                     <div class="w-100"></div>
@@ -208,38 +203,38 @@
                         <h4>About Footwear</h4>
                         <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
                         <p>
-                            <ul class="colorlib-social-icons">
-                                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                            </ul>
+                        <ul class="colorlib-social-icons">
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-facebook"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                        </ul>
                         </p>
                     </div>
                     <div class="col footer-col colorlib-widget">
                         <h4>Customer Care</h4>
                         <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Returns/Exchange</a></li>
-                                <li><a href="#">Gift Voucher</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Special</a></li>
-                                <li><a href="#">Customer Services</a></li>
-                                <li><a href="#">Site maps</a></li>
-                            </ul>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Returns/Exchange</a></li>
+                            <li><a href="#">Gift Voucher</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="#">Special</a></li>
+                            <li><a href="#">Customer Services</a></li>
+                            <li><a href="#">Site maps</a></li>
+                        </ul>
                         </p>
                     </div>
                     <div class="col footer-col colorlib-widget">
                         <h4>Information</h4>
                         <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">Order Tracking</a></li>
-                            </ul>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Order Tracking</a></li>
+                        </ul>
                         </p>
                     </div>
 
@@ -267,9 +262,13 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <p>
-                            <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+                            <span>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </span>
                             <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
                         </p>
                     </div>
