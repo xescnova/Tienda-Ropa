@@ -257,7 +257,7 @@ function numCart($ident)
     SELECT SUM(cantidad) as elems FROM CANTIDAD 
     JOIN PRODUCTO on idc_producto=id_producto
     JOIN CARRITO on id_carrito=idc_carrito 
-    where id_usr=".$ident.";
+    where id_usr=".$ident." and estado='CREADO';
     ");
     $consulta->execute();
     $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
