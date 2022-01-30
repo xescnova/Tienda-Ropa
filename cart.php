@@ -70,7 +70,7 @@
                                 <li><a href="children.php">Niños</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="contact.html">Contact</a></li>
-                                <li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                                <li class="cart"><a href="cart.php"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                             </ul>
                         </div>
                     </div>
@@ -151,162 +151,119 @@
                                 <span>Eliminar</span>
                             </div>
                         </div>
+                            
                         <?php
+                         $ide = $_SESSION['id'];
                          include "conexionSQLServer.php";
                          $consulta=$conex->prepare("SELECT * FROM carrito JOIN cantidad 
                          on idc_carrito=id_carrito JOIN producto 
                          on id_producto=idc_producto 
-                         where id_usr='6'");
+                         where id_usr='$ide'");
                          $consulta->execute();
                          $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
-                         $nom=$datos[0]->nombre;
-                         $precio=$datos[0]->precio;
-                         $cantidad=$datos[0]->cantidad;
-                         $total=$cantidad *$precio;
-                         echo '<div class="product-cart d-flex">
+                       
+                        foreach ($datos as $d) {          
+                         $nom=$d->nombre;
+                         $precio=intval($d->precio);
+                         $cantidad=$d->cantidad;
+                         $total=$cantidad*$precio;
+                         $idProd=$d->id_producto;
+                         //Imagen mongodb
+                         
+                            require_once 'conexionMongo.php';
+                            $filtro = array('sku' => intval($idProd));
+                            $peticion = $db->find($filtro);
+                            
+                            foreach ($peticion as $producto) {
+                                echo '<div class="product-cart d-flex">
                          <div class="one-forth">
-                             <div class="product-img" style="background-image: url(images/item-6.jpg);">
-                             </div>
+                         <img src="'.$producto["imagen"].'"  heigth="100px" width="100px" alt="">';
+                            }
+                           
+
+                         echo '
                              <div class="display-tc">
                                  <h3>'.$nom.'</h3>
                              </div>
                          </div>
                          <div class="one-eight text-center">
                              <div class="display-tc">
-                                 <span class="price">'.$precio.'</span>
+                                 <span class="price">'.$precio.'€</span>
+                             </div>
+                         </div>
+                         <div class="one-eight text-center">
+                             <div class="display-tc">                             
+                                 
+                                 <span class="price" id="total'.$idProd.'" value="'.$cantidad.'">x'.$cantidad.'</span>
                              </div>
                          </div>
                          <div class="one-eight text-center">
                              <div class="display-tc">
-                                 <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
+                                 <span class="price" id="total'.$idProd.'" value="'.$total.'">'.$total.'€</span>
                              </div>
+                             
                          </div>
                          <div class="one-eight text-center">
-                             <div class="display-tc">
-                                 <span class="price">'.$total.'</span>
-                             </div>
+                         <form action="procesarDelete.php" method="get">
+                         <input type="hidden" name="producto" value="'.$idProd.'">
+                            <input type="submit" class="btn btn-danger" value="Eliminar">
+                        </form>
                          </div>
-                         <div class="one-eight text-center">
-                             <div class="display-tc">
-                                 <a href="#" class="closed"></a>
-                             </div>
-                         </div>
+                         
                      </div>';
-                     
+                              }           
                         ?>
-                        <div class="product-cart d-flex">
-                            <div class="one-forth">
-                                <div class="product-img" style="background-image: url(images/item-6.jpg);">
-                                </div>
-                                <div class="display-tc">
-                                    <h3>Product Name</h3>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <span class="price">$68.00</span>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <span class="price">$120.00</span>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <a href="#" class="closed"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-cart d-flex">
-                            <div class="one-forth">
-                                <div class="product-img" style="background-image: url(images/item-7.jpg);">
-                                </div>
-                                <div class="display-tc">
-                                    <h3>Product Name</h3>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <span class="price">$68.00</span>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <form action="#">
-                                        <input type="text" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <span class="price">$120.00</span>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <a href="#" class="closed"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-cart d-flex">
-                            <div class="one-forth">
-                                <div class="product-img" style="background-image: url(images/item-8.jpg);">
-                                </div>
-                                <div class="display-tc">
-                                    <h3>Product Name</h3>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <span class="price">$68.00</span>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <span class="price">$120.00</span>
-                                </div>
-                            </div>
-                            <div class="one-eight text-center">
-                                <div class="display-tc">
-                                    <a href="#" class="closed"></a>
-                                </div>
-                            </div>
-                        </div>
+                       
+                       
+                      
                     </div>
                 </div>
-                <div class="row row-pb-lg">
-                    <div class="col-md-12">
-                        <div class="total-wrap">
-                            <div class="row">
-                                <div class="col-sm-8">
 
+                <?php
+                 $ide = $_SESSION['id'];
+                 include "conexionSQLServer.php";
+                 $consulta=$conex->prepare("SELECT * FROM carrito JOIN cantidad 
+                 on idc_carrito=id_carrito JOIN PRODUCTO 
+                 on idc_producto=idc_producto where id_usr='$ide'");
+                 $consulta->execute();
+                 $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
+                 ?>
+                <div class="row row-pb-lg">
+                <div class="col-md-12">
+                    <div class="total-wrap">
+                        <div class="row">
+                            <div class="col-sm-8">
+
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <div class="total">
+                                    <div class="sub">
+                                <?php
+                                $ide = $_SESSION['id'];
+                                include "conexionSQLServer.php";
+                                $consulta=$conex->prepare("SELECT * FROM carrito JOIN cantidad 
+                                on idc_carrito=id_carrito JOIN PRODUCTO 
+                                on idc_producto=idc_producto where id_usr='$ide'");
+                                $consulta->execute();
+                                $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
+                               
+                                
+                                echo '<p><span>Subtotal:</span> <span>$200.00</span></p>';
+                                                                  
+                                ?>
                                 </div>
-                                <div class="col-sm-4 text-center">
-                                    <div class="total">
-                                        <div class="sub">
-                                            <p><span>Subtotal:</span> <span>$200.00</span></p>
-                                            <p><span>Discount:</span> <span>$45.00</span></p>
-                                        </div>
-                                        <div class="grand-total">
-                                            <p><span><strong>Total:</strong></span> <span>$450.00</span></p>
-                                        </div>
-                                    </div>
+                                <div class="grand-total">
+                                    <p><span><strong>Total:</strong></span> <span>$450.00</span></p>
+                                </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+                
+                
+                
 
 
             </div>
@@ -359,6 +316,43 @@
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
     </div>
+
+
+
+    <script>
+        /*
+        function prodMas(x,precio){ 
+            var cantidad=document.getElementById("quantity"+x).value
+            cantidad = parseInt(document.getElementById("quantity"+x).value)+ 1;
+            console.log(cantidad);
+            //var precioTotal=document.getElementById("total"+x).value
+            //precioTotal=parseInt(document.getElementById("quantity"));
+            //console.log(precioTotal);
+            //var ruta="pre="+precioTotal;
+            var pT= cantidad * precio;
+            //console.log(pT);
+            var ruta="Test="+pT;
+            //console.log(ruta);
+            //alert(ruta);
+            $.ajax({
+                type: "POST",
+                url: "procesarCarrito.php",
+                data: "ruta",
+                success: function (response) {
+                    alert(response);
+                    $("#total1").html(response)
+                }
+            });
+        }
+        */
+    </script>
+     <script>
+         /*
+        function prodMenos(x){            
+            document.getElementById("quantity"+x).value= parseInt(document.getElementById("quantity"+x).value)- 1;
+        }
+        */
+    </script>
 
     <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
