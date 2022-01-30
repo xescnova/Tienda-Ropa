@@ -32,10 +32,25 @@ if($datos4[0]->credito < $pTot){
 }
 else{
 //Restamos saldo de la compra al usuario
-$consulta3=$conex->prepare("UPDATE usuario set credito=credito - '$pTot' where id='$ide'");
+$consulta3=$conex->prepare("UPDATE usuario set credito=credito -'$pTot' where id='$ide'");
 $consulta3->execute();
 $datos3=$consulta3->fetchAll(PDO::FETCH_OBJ);
+//Actualizamos el stock
+$consulta6=$conex->prepare("SELECT cantidad,estoc,id_talla,ide_producto FROM CANTIDAD JOIN TALLA 
+on id_tal=id_talla JOIN ESTOC 
+ON id_talla=ide_talla JOIN PRODUCTO on
+idc_producto=id_producto JOIN CARRITO 
+on idc_carrito=id_carrito and ide_producto=id_producto and idc_carrito='$idcarrito'");
+$consulta6->execute();
+$datos6=$consulta6->fetchAll(PDO::FETCH_OBJ);
+foreach ($datos6 as $producto) {
+    $consulta7=$conex->prepare("UPDATE estoc set estoc=estoc-$producto->cantidad where ide_producto=$producto->ide_producto and ide_talla=$producto->id_talla");
+    $consulta7->execute();
+    $datos7=$consulta7->fetchAll(PDO::FETCH_OBJ);
+    
+}
 
+//Ponemos el carrito a estado confirmado
 $consulta=$conex->prepare("UPDATE carrito set estado='CONFIRMADO' WHERE id_carrito='$idcarrito'");
 $consulta->execute();
 $datos=$consulta->fetchAll(PDO::FETCH_OBJ);
